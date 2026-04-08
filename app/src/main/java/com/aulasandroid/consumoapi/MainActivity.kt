@@ -108,7 +108,31 @@ fun CepScreen(modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(text = "Qual CEP está buscando?") },
                     trailingIcon = {
-                        IconButton( onClick = { /* TODO */ } ) {
+                        IconButton( onClick = {
+
+                            val call = RetrofitFactory()
+                                .getEnderecoService()
+                                .getEnderecoByCep(
+                                    cep = cepState,
+                                )
+                            call.enqueue(object: Callback<Endereco> {
+                                override fun onResponse(
+                                    call: Call<Endereco>,
+                                    response: Response<Endereco>
+                                ) {
+                                    // Log.i("TESTE", "${ response.body() }" )
+
+                                   listaEnderecos = listOf(response.body()!!)
+                                }
+
+                                override fun onFailure(
+                                    call: Call<Endereco>,
+                                    t: Throwable
+                                ) {
+                                    Log.i("TESTE", "${ t.message }")
+                                }
+                            })
+                        } ) {
                             Icon(
                                 imageVector = Icons.Default.Search,
                                 contentDescription = ""

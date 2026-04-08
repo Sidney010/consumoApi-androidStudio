@@ -5,9 +5,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitFactory {
     private val BASE_URL = "https://viacep.com.br/ws/"
+
+
+    // Conversao padrao
     private val retrofitFactory = Retrofit
-        .Builder()
-        .addConverterFactory(GsonConverterFactory.create())
+        .Builder() // Configuracao basica
+        .addConverterFactory(GsonConverterFactory.create()) // Adiciona, uma transformacao em um objeto
         .baseUrl(BASE_URL)
         .build()
 
